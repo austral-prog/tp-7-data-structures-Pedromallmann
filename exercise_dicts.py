@@ -13,8 +13,15 @@ def create_inventory(items):
     Returns:
         Un diccionario con cada item y su cantidad
     """
-    pass  # Reemplazar con tu implementación
+    diccionario = {}
+    for i in items:
+        if i in diccionario:
+            diccionario[i] = diccionario[i] + 1
+        else:
+            diccionario[i] = 1
+    return diccionario
 
+print(create_inventory(["coal", "wood", "wood", "diamond", "diamond", "diamond"]))
 
 def add_items(inventario, items):
     """
@@ -29,8 +36,13 @@ def add_items(inventario, items):
     Returns:
         El inventario actualizado
     """
-    pass  # Reemplazar con tu implementación
-
+    for i in items:
+        if i in inventario:
+            inventario[i] = inventario[i] + 1
+        else:
+            inventario[i] = 1
+    return inventario
+print(add_items({"coal": 1}, ["wood", "iron", "coal", "wood"]))
 
 def decrement_items(inventario, items):
     """
@@ -46,8 +58,21 @@ def decrement_items(inventario, items):
     Returns:
         El inventario actualizado (sin valores negativos)
     """
-    pass  # Reemplazar con tu implementación
+    for i in items:
 
+        if i in inventario:
+            inventario[i] = inventario[i] - 1
+
+
+            if inventario[i] < 0:
+                inventario[i] = 0
+
+    return inventario
+
+print(decrement_items({"coal": 3, "diamond": 1, "iron": 5},
+                ["diamond", "coal", "iron", "iron"]))
+print(decrement_items({"coal": 2, "wood": 1, "diamond": 2},
+                ["coal", "coal", "wood", "wood", "diamond"]))
 
 def remove_item(inventario, item):
     """
@@ -61,9 +86,10 @@ def remove_item(inventario, item):
     Returns:
         El inventario actualizado (o sin cambios si el item no existe)
     """
-    pass  # Reemplazar con tu implementación
-
-
+    if item in inventario:
+        del inventario[item]
+    return inventario
+print(remove_item({"coal": 2, "wood": 1, "diamond": 2}, "coal"))
 def list_inventory(inventario):
     """
     Retorna una lista de tuplas (item, cantidad) con el contenido del
@@ -75,8 +101,17 @@ def list_inventory(inventario):
     Returns:
         Lista de tuplas (item, cantidad) con cantidad > 0
     """
-    pass  # Reemplazar con tu implementación
+    lista = []
 
+    for clave, valor in inventario.items():
+
+        if valor > 0:
+
+            lista.append((clave, valor))
+
+    return lista
+
+print(list_inventory({"coal": 7, "wood": 11, "diamond": 2, "iron": 7, "silver": 0}))
 
 def find_max_value(diccionario):
     """
@@ -93,8 +128,19 @@ def find_max_value(diccionario):
     Ejemplo:
         find_max_value({'John': 85, 'Emma': 92, 'Sophia': 78}) -> 'Emma'
     """
-    pass  # Reemplazar con tu implementación
+    if not diccionario:  # Si está vacío, entra aquí
+        return ""
 
+    nom = ""
+    suma = float('-inf')
+    for nombre, valor in diccionario.items():
+        if valor > suma:
+            suma = valor
+            nom = nombre
+
+    return nom
+
+print(find_max_value({'John': 85, 'Emma': 92, 'Sophia': 78}))
 
 def reverse_dict(diccionario):
     """
@@ -112,7 +158,18 @@ def reverse_dict(diccionario):
         reverse_dict({'a': 1, 'b': 2, 'c': 3, 'd': 3, 'e': 2})
         -> {1: 'a', 2: 'be', 3: 'cd'}
     """
-    pass  # Reemplazar con tu implementación
+    invertido = {}
+
+    for clave, valor in diccionario.items():
+        if valor in invertido:
+            invertido[valor] = invertido[valor] + clave
+        else:
+            invertido[valor] = clave
+
+    return invertido
+
+
+print(reverse_dict({'a': 1, 'b': 2, 'c': 3, 'd': 3, 'e': 2}))
 
 
 def word_frequency(palabras):
@@ -131,7 +188,14 @@ def word_frequency(palabras):
         word_frequency(["apple", "banana", "apple", "orange", "banana", "apple"])
         -> {'apple': 3, 'banana': 2, 'orange': 1}
     """
-    pass  # Reemplazar con tu implementación
+    dict = {}
+    for i in palabras:
+        if i in dict:
+            dict[i] = dict[i] + 1
+        else:
+            dict[i] = 1
+    return dict
+print(word_frequency(["apple", "banana", "apple", "orange", "banana", "apple"]))
 
 
 def find_biggest_expense(gastos):
@@ -151,8 +215,27 @@ def find_biggest_expense(gastos):
                               'Transport': [10, 1, 2],
                               'Games': [10, 20, 30]}) -> 'Food'
     """
-    pass  # Reemplazar con tu implementación
+    if gastos == {}:
+        return ""
+    else:
+        lista = list(gastos.items())
+        cantidad = len(lista)
+        suma = -1
+        rta = []
 
+        for i in range(cantidad):
+            gastos_actuales = lista[i][1]
+            promedio_actual = sum(gastos_actuales) / len(gastos_actuales)
+
+            if promedio_actual > suma:
+                suma = promedio_actual
+
+                rta = [lista[i][0]]
+        return rta[0]
+
+print(find_biggest_expense({'Food': [60, 80, 100],
+                      'Transport': [10, 1, 2],
+                      'Games': [10, 20, 30]}))
 
 def sum_expenses(gastos):
     """
@@ -171,8 +254,13 @@ def sum_expenses(gastos):
                       'Games': [10, 20, 30]})
         -> {'Food': 240, 'Transport': 13, 'Games': 60}
     """
-    pass  # Reemplazar con tu implementación
+    for categoria, valor in gastos.items():
+        gastos[categoria] = sum(valor)
+    return gastos
 
+print(sum_expenses({'Food': [60, 80, 100],
+                      'Transport': [10, 1, 2],
+                      'Games': [10, 20, 30]}))
 
 def sum_expenses_by_type(gastos):
     """
@@ -194,4 +282,25 @@ def sum_expenses_by_type(gastos):
         })
         -> {'A': 96, 'B': 174, 'C': 104}
     """
-    pass  # Reemplazar con tu implementación
+    resultado = {}
+
+
+    for lista_de_tuplas in gastos.values():
+
+        for tipo, monto in lista_de_tuplas:
+
+            if tipo in resultado:
+                resultado[tipo] = resultado[tipo] + monto
+            else:
+                resultado[tipo] = monto
+
+    return resultado
+
+
+print(sum_expenses_by_type({
+    'Food': [("A", 60), ("B", 100), ("A", 20)],
+    'Transport': [("A", 10), ("B", 50), ("C", 5)],
+    'Games': [("A", 6), ("B", 24), ("C", 99)]
+}))
+
+
